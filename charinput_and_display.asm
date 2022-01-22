@@ -1,3 +1,4 @@
+TITLE charinput_and_display:single_char_input_and_display
 .MODEL SMALL
 .STACK 100h
 .CODE
