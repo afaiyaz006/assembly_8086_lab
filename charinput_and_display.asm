@@ -1,4 +1,5 @@
 .MODEL SMALL
+.STACK 100h
 .CODE
 MAIN PROC
     ;showing visual prompt
