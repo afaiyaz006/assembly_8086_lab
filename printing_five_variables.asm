@@ -19,31 +19,30 @@ MAIN PROC    ;main procedure
     MOV AH,1
     INT 21H
     MOV UNKNOWN,AL
-   
-    MOV AH,2
+    
     MOV CL,0H
+    MOV AH,2
     
-    ;ADDITIONAL NEWLINE AFTER INPUT
-    MOV DL,0DH
-    INT 21H
-    MOV DL,0AH
-    INT 21H
-     
-    
-    ;PRINTING 5 VARIABLES
-PRINT_NUMD:
-    MOV DL,NUMD
-    INT 21H    
     JMP PRINT_NEWLINE
-    
+    ;PRINTING 5 VARIABLES
+
+PRINT_NUMD:    
+    MOV DL,NUMD
+    INT 21H
+    INC CL    
+    JMP PRINT_NEWLINE
+
 PRINT_NUMH:
     MOV DL,NUMH
-    INT 21H
+    INT 21H          
+    INC CL
     JMP PRINT_NEWLINE
+
 
 PRINT_CHAR:
     MOV DL,CHAR
     INT 21H
+    INC CL
     JMP PRINT_NEWLINE
 
 PRINT_MSG:
@@ -51,11 +50,13 @@ PRINT_MSG:
     MOV DX,OFFSET MSG
     INT 21H
     MOV AH,2
+    INC CL
     JMP PRINT_NEWLINE
-
+    
 PRINT_UNKNOWN:
     MOV DL,UNKNOWN
     INT 21H
+    INC CL
     JMP PRINT_NEWLINE    
 
 PRINT_NEWLINE:
@@ -63,7 +64,8 @@ PRINT_NEWLINE:
     INT 21H
     MOV DL,0AH
     INT 21H
-    INC CL
+    CMP CL,0H
+    JE  PRINT_NUMD
     CMP CL,1H
     JE  PRINT_NUMH
     CMP CL,2H
@@ -72,8 +74,8 @@ PRINT_NEWLINE:
     JE  PRINT_MSG
     CMP CL,4H
     JE  PRINT_UNKNOWN 
-	
-	MOV AH,4CH   ;4CH function code for exit
+
+    MOV AH,4CH   ;4CH function code for exit
 	INT 21H	     ;exit and return control to operating system
 MAIN ENDP    ;exit main procedure	
 ;other procedure
